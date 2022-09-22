@@ -47,6 +47,7 @@ int ntzx_Conver_N_B(double in_yaw_rad, double TargetEarthCoord_x_m, double Targe
 //返回单位：m
 double ntzx_GPS_length(double lonti1,double lati1,double lonti2,double lati2)
 {
+    printf("3333");
     double x=0,y=0;
     double length=0;
 

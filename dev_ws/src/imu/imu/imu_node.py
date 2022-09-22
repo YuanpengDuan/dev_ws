@@ -147,7 +147,7 @@ def handleSerialData(raw_data):
 
 
     data = []
-    data=open("/home/d/dev_ws/src/imu/imudata.txt",'w+')
+    data=open("/home/swy/dev_ws/src/imu/imudata.txt",'w+')
     print("%.2f" %float(acceleration[0] * -9.8 / acc_k), "%.2f" % float(acceleration[1] * -9.8 / acc_k), "%.2f" %  float(acceleration[2] * -9.8 / acc_k),
                 "%.2f" %  angularVelocity[0], "%.2f" % angularVelocity[1], "%.2f" % angularVelocity[2],
                 "%.2f" %angle_degree[0], "%.2f" % angle_degree[1],  "%.2f" % angle_degree[2],
@@ -160,7 +160,7 @@ class NodePublisher02(Node):
     def __init__(self,name):
         super().__init__(name)
         self.get_logger().info("大家好，我是%s!" % name)
-        self.command_publisher_ = self.create_publisher(Imu,"command", 10) 
+        self.command_publisher_ = self.create_publisher(Imu,"imu_command", 10) 
         self.timer = self.create_timer(0.5, self.timer_callback)
         
         
@@ -204,7 +204,7 @@ class NodePublisher02(Node):
                         for i in range(0, buff_count):
                             handleSerialData(buff_data[i])   
                             
-                    f = open("/home/d/dev_ws/src/imu/imudata.txt")
+                    f = open("/home/swy/dev_ws/src/imu/imudata.txt")
 
         #读取一行数据
 

@@ -117,15 +117,20 @@ int ntzx_get_inv_to_pl(str_inv_to_pl *nav_info)
     g_gps_data.qual = NTZX_QIANXUN_QUAL_RTKFIX;
     if (  g_gps_data.qual == NTZX_QIANXUN_QUAL_RTKFIX   )
     {
+        printf("enter inv");
         pthread_mutex_lock(&g_mutex_qianxun_gps_info);
         nav_info->courseAngle = g_gps_data.courseAngle;
-        nav_info->lat = g_gps_data.lat/100;//原始数据经纬度是实际经纬度的100倍，详细可用串口助手查看GPS原始数据
-        nav_info->lon = g_gps_data.lon/100;
+        nav_info->lat = g_gps_data.lat;
+        nav_info->lon = g_gps_data.lon;
+        // nav_info->lat = g_gps_data.lat/100;//原始数据经纬度是实际经纬度的100倍，详细可用串口助手查看GPS原始数据
+        // nav_info->lon = g_gps_data.lon/100;
         nav_info->speedmm = g_vel_data.Vel_N;//添加
         nav_info->frame = g_gps_data.frame;
         pthread_mutex_unlock(&g_mutex_qianxun_gps_info);
+        printf("nav_lat=%f\n", nav_info->lat);
         return NTZX_QIANXUN_SUCCESS;
     }else {      
+        printf("errrrrrr");
         return NTZX_QIANXUN_DATA_ERR;
     }      
     

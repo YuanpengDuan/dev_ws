@@ -9,7 +9,7 @@ public:
     {
         RCLCPP_INFO(this->get_logger(), "大家好，我是%s.", name.c_str());
         // 创建发布者
-        subscribe_and_publish_publisher_ = this->create_publisher<message_interfaces::msg::Control>("control_command", 10);
+        control_command_publisher_ = this->create_publisher<message_interfaces::msg::Control>("control_command", 10);
         // 创建定时器，500ms为周期，定时发布
         timer_ = this->create_wall_timer(std::chrono::milliseconds(500), std::bind(&Publisher::timer_callback, this));
     }
@@ -24,12 +24,12 @@ private:
         // 日志打印
         RCLCPP_INFO(this->get_logger(), "v_c: '%s'，w_c: '%s'", message.v_c.c_str(),message.w_c.c_str());
         // 发布消息
-        subscribe_and_publish_publisher_->publish(message);
+        control_command_publisher_->publish(message);
     }
     // 声名定时器指针
     rclcpp::TimerBase::SharedPtr timer_;
     // 声明话题发布者指针
-    rclcpp::Publisher<message_interfaces::msg::Control>::SharedPtr subscribe_and_publish_publisher_;
+    rclcpp::Publisher<message_interfaces::msg::Control>::SharedPtr control_command_publisher_;
 };
 
 int main(int argc, char **argv)
