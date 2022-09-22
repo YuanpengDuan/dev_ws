@@ -1,0 +1,16 @@
+# 加速度
+string acceleration_x
+string acceleration_y
+string acceleration_z
+# 角速度
+string angular_velocity_x
+string angular_velocity_y
+string angular_velocity_z
+# 欧拉角
+string angle_degree_x
+string angle_degree_y
+string angle_degree_z
+# 磁场
+string magnetometer_x
+string magnetometer_y
+string magnetometer_z
