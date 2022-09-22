@@ -9,6 +9,7 @@
 #include "planning/ntzx_log_app.hpp"
 #include "message_interfaces/msg/gnss.hpp"
 #include "message_interfaces/msg/pl.hpp"
+#include "planning/ntzx_download_info.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -65,11 +66,10 @@ int Road_Planning_Find_Nearest_Point(int start_index , str_inv_to_pl Cur_GPS_inf
     int Nearest_point_index =0;
     float aft_distance =0,pre_distance =0;
     pre_distance = ntzx_GPS_length(Cur_GPS_info.lon,Cur_GPS_info.lat,Road_info->waypoint_info[start_index].Longitude_degree,Road_info->waypoint_info[start_index].Latitude_degree);
-    
     int start = start_index+1;
+    printf("Road_info->num=%d\n",Road_info->num);
     for (int i = start; i < (Road_info->num-2); i++)
     {   
-           
         aft_distance = ntzx_GPS_length(Cur_GPS_info.lon,Cur_GPS_info.lat,Road_info->waypoint_info[i].Longitude_degree,Road_info->waypoint_info[i].Latitude_degree);
         if ( aft_distance<pre_distance )
         {
@@ -118,21 +118,23 @@ private:
    void timer_callback()
     {
         message_interfaces::msg::Pl message;
-
         int road_point_nearest_index = 0;
+        g_road_info_pl =  ntzx_download_info_test();
+        printf("g_ntzx_vehicle_waypoint.num=%d\n",g_road_info_pl.num);
         int road_point_need_to_march_index=1;
         ntzx_systimer plan_sys = {0};
         /* 获取路径点 */
-        ntzx_get_vehicle_waypoint(&g_road_info_pl);
-        Timer_Set(&plan_sys, 50000);
+        // ntzx_get_vehicle_waypoint(&g_road_info_pl);
+                Timer_Set(&plan_sys, 50000);
         printf("planning start");
         while (1) 
         {  //执行频率20hz
             if (Timer_GetReached(&plan_sys) < 0) 
                 continue;
             Timer_Set(&plan_sys, 50000);
-            /*1.实时获取导航数据，m emcpy*/
-            // int rt = ntzx_get_inv_to_pl(&inv_to_pl);
+            /*1.实时获取导航数据，memcpy*/
+                // ntzx_get_inv_to_pl(&inv_to_pl);
+                printf("lat=%f\n",inv_to_pl.lat);
             if (inv_to_pl.lat == 0.0 || inv_to_pl.lon == 0.0) {
                 printf("等待有效GPS数据\n");
                 sleep(2);
@@ -140,12 +142,12 @@ private:
                 ntzx_stop_car();
                 continue;
             }
-            // printf("get gps data");
+            printf("get gps data");
             /*2. 寻找当前路径下跟当前定位最近的点*/
             road_point_nearest_index = Road_Planning_Find_Nearest_Point(road_point_nearest_index,inv_to_pl,&g_road_info_pl);
             if (road_point_nearest_index<0){
                 printf("路径点读取结束!%d\n",road_point_nearest_index);
-                while (1);
+                // while (1);
             } 
             // printf("find the point1");      
             /*3.找到车体前方大于50cm，且在车子周身2m*3m的区域范围内的路径点下标*/

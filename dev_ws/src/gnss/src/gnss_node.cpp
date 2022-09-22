@@ -98,8 +98,8 @@ class TopicPublisher01 : public rclcpp::Node
 public:
   TopicPublisher01(std::string name) : Node(name)
     {
-        RCLCPP_INFO(this->get_logger(),"我是%s,发布话题为:/command.",name.c_str());
-         command_publisher_ = this->create_publisher<message_interfaces::msg::Gnss>("command",10);
+        // RCLCPP_INFO(this->get_logger(),"我是%s,发布话题为:/command.",name.c_str());
+        gnss_command_publisher_ = this->create_publisher<message_interfaces::msg::Gnss>("gnss_command",10);
         timer_ = this->create_wall_timer(std::chrono::milliseconds(500),std::bind(&TopicPublisher01::timer_callback,this));
     }
 private:
@@ -127,10 +127,10 @@ private:
         /*北向速度数据发布*/
         message.vel_n= to_string(g_vel_data.Vel_N);
         RCLCPP_INFO(this->get_logger(),"vel_n='%s'",message.vel_n.c_str());
-        command_publisher_->publish(message);
+        gnss_command_publisher_->publish(message);
     }
     rclcpp::TimerBase::SharedPtr timer_;
-    rclcpp::Publisher<message_interfaces::msg::Gnss>::SharedPtr command_publisher_;
+    rclcpp::Publisher<message_interfaces::msg::Gnss>::SharedPtr gnss_command_publisher_;
 
 };
 
@@ -443,7 +443,7 @@ static int ntzx_gpgga_proc(void)
     g_gps_data.courseAngle = Heading_GPYBM;   //航向角
     g_gps_data.Picth = Pitch_GPYBM;           //附仰角
     
-     fprintf(fp,"time=%d:%d:%d:%d,lat=%0.4f,lon=%0.4f,courseAngle=%0.4f,Pitch=%0.4f\n", g_gps_data.time.hour ,g_gps_data.time.min, g_gps_data.time.s, g_gps_data.time.ms, g_gps_data.lat,g_gps_data.lon, g_gps_data.courseAngle,g_gps_data.Picth);
+     fprintf(fp,"time=%d:%d:%d:%d,lat=%0.4f,lon=%0.4f,courseAngle=%0.4f,Pitch=%0.4f,vel_n=%0.4f\n", g_gps_data.time.hour ,g_gps_data.time.min, g_gps_data.time.s, g_gps_data.time.ms, g_gps_data.lat,g_gps_data.lon, g_gps_data.courseAngle,g_gps_data.Picth,g_vel_data.Vel_N);
     fflush(fp);
 
 

@@ -26,7 +26,7 @@ typedef struct ntzx_vehicle_waypoint {
 } str_ntzx_vehicle_waypoint;
 
 void *ntzx_download_info_main(void* arg);
-int ntzx_download_info_test(void);
+str_ntzx_vehicle_waypoint ntzx_download_info_test(void);
 void ntzx_get_vehicle_waypoint(str_ntzx_vehicle_waypoint *waypoint);
 
 #endif
