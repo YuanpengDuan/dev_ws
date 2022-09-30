@@ -1,0 +1,9 @@
+string hour
+string min
+string s
+string ms
+float64 lat
+float64 lon
+float64 courseangle
+string picth
+string vel_n
