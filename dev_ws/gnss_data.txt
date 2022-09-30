@@ -1,0 +1,2 @@
+time=17:48:15:500,lat=120.9153,lon=32.0312,courseAngle=91.7640,Pitch=-51.0920,vel_n=0.0000
+time=17:48:19:300,lat=0.0000,lon=0.0000,courseAngle=0.0000,Pitch=0.0000,vel_n=0.0380
