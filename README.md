@@ -25,3 +25,8 @@
 可以实现寻迹功能，暂时没啥问题
 
 [dev_ws-V1.4链接](https://github.com/YuanpengDuan/dev_ws/tree/V1.4)
+
+# dev_ws-V1.5
+巡迹、避障、绕障功能实现，一阶段代码完成
+
+[dev_ws-V1.5链接](https://github.com/YuanpengDuan/dev_ws/tree/V1.5)
